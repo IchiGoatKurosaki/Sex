@@ -1,0 +1,91 @@
+sethiddenproperty(game:GetService("Players").LocalPlayer,"SimulationRadius",math.huge)
+ local path 
+  if game.PlaceId == 6558526079 then 
+    path = game:GetService("Players").LocalPlayer.PlayerGui.TeamUI.UI.Team.Grid
+ else
+ path  = game:GetService("Players").LocalPlayer.PlayerGui.InterFace.Equip.Grid
+ end
+
+local units = {}
+ for i,v in pairs(path:GetDescendants()) do 
+ if v:IsA('Model') and  v.Name ~= "WorldModel" then 
+table.insert(units,v.Name)
+  end
+  end
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("script lam boi joes ", "DarkTheme")
+
+local Tab = Window:NewTab("OP")
+local Section = Tab:NewSection("INF PLACE UNITS")
+
+Section:NewDropdown("Select UNIT: ", "DropdownInf", units, function(txt)
+  getgenv().Name = txt
+end)
+
+
+Section:NewToggle("Auto Place INF right ur place", "ToggleInfo", function(state)
+    getgenv().a = state
+     while task.wait() do 
+      if a == true then 
+         local args = {
+    [1] = getgenv().Name,
+    [2] = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+}
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("SpawnUnit"):InvokeServer(unpack(args))
+
+ else
+ wait()
+ break
+ end
+    end
+end)
+
+Section:NewButton("Place INF right ur place", "ButtonInfo", function()
+   local args = {
+    [1] = getgenv().Name,
+    [2] = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+}
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("SpawnUnit"):InvokeServer(unpack(args))
+
+end)
+
+local Section = Tab:NewSection("INF PLACE UNITS 2")
+
+Section:NewDropdown("Select UNIT INF PLACE 2: ", "DropdownInf", units, function(txt)
+  getgenv().Name2 = txt
+end)
+
+Section:NewToggle("Auto Place INF 2 right ur place", "ToggleInfo", function(state)
+    getgenv().b = state
+     while task.wait() do 
+      if b == true then 
+         local args = {
+    [1] = getgenv().Name2,
+    [2] = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+}
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("SpawnUnit"):InvokeServer(unpack(args))
+
+ else
+ wait()
+ break
+ end
+    end
+end)
+
+Section:NewButton("Place UNIT 2", "ButtonInfo", function()
+   local args = {
+    [1] = getgenv().Name2,
+    [2] = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+}
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("SpawnUnit"):InvokeServer(unpack(args))
+
+end)
+
+ Section:NewSlider("Player WalkSpeed:", "SliderInfo", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+Section:NewKeybind("Hide UI", "KeybindInfo", Enum.KeyCode.F, function()
+    Library:ToggleUI()
+end)
